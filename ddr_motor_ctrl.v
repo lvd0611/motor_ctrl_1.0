@@ -16,7 +16,6 @@ module DDR_motor_ctrl(
     input pos_clr,//电机位置清零信号
     output pul_out,//脉冲输出信号
     output reg read,//单次脉冲输出完成后的读脉冲信号
-    output pul_state,//电机运动状态信号
     output reg [31:0] step_pos,//电机位置反馈
     output [31:0] step_speed//电机速度反馈
     );
@@ -203,7 +202,6 @@ always@(posedge clk or negedge rst_n)begin
     end
 end
 
-assign pul_state = pul_en;//为0时，电机停止，为1时，电机运动
 assign rst_n=rst||pul_rst;//当rst或者pul_rst为1时，FIFO复位
 
 
