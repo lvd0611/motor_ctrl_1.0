@@ -1,11 +1,11 @@
 `timescale 1ns / 1ps
 
 
-module motor_ctrl(
+module DDR_motor_ctrl(
     input  clk,
     input  rst,
-    input   en,//使能读FIFO信号
-    input pul_rst,//脉冲复位信号
+    input   en,//使能信号，为一时才开始读取数据
+    input pul_rst,//软件复位信号
     input [1:0] pul_mode,//脉冲模式选择信号
     input pul_stop,//停止脉冲输出信号
     input [31:0] step,//脉冲输出步数
@@ -15,7 +15,7 @@ module motor_ctrl(
     input pul_dir,//脉冲方向信号
     input pos_clr,//电机位置清零信号
     output pul_out,//脉冲输出信号
-    output reg read,//单次脉冲输出完成信号
+    output reg read,//单次脉冲输出完成后的读脉冲信号
     output pul_state,//电机运动状态信号
     output reg [31:0] step_pos,//电机位置反馈
     output [31:0] step_speed//电机速度反馈
