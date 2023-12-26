@@ -19,6 +19,7 @@ module DDR_motor_ctrl(
     output reg [31:0] step_pos,//电机位置反馈
     output [31:0] step_speed//电机速度反馈
     );
+    
 
     reg [31:0] pul_cnt;
     reg pul_en;
