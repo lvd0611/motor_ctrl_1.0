@@ -1,7 +1,7 @@
 `timescale 1ns / 1ps
 
 
-module motor_ctrl(
+module ddr_motor_ctrl(
     input  clk,
     input  rst,
     input   en,//Ê¹ÄÜ¶ÁFIFOÐÅºÅ

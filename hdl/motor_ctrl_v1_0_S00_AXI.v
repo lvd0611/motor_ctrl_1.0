@@ -23,7 +23,7 @@
 		input wire [31:0] ddr_data_2,//脉冲宽度
 		input wire data_valid_2,//脉冲宽度有效信号
 		output wire read_2,//读取脉冲宽度信号
-		output wire pul_rst_2,//软件复位信号
+		output wire addr_rst_2,//软件复位信号
 
 		output wire pul_out_1,//电机脉冲信号
 		output wire pul_dir_1,//电机方向信号
@@ -753,7 +753,7 @@
 		if ( S_AXI_ARESETN == 1'b0 )
 		begin
 			pul_value_1 <= 0;
-		end if(!valid_1||ddr_data_1<2)
+		end if(!data_valid_1||ddr_data_1<2)
 		begin
 			pul_value_1 <= pul_value_1;
 		end
@@ -762,7 +762,7 @@
 			pul_value_1 <= ddr_data_1;
 		end
 	end
-DDR_motor_ctrl DDR_motor_ctrl_1 (
+ddr_motor_ctrl ddr_motor_ctrl_1 (
     .clk(S_AXI_ACLK),
     .rst(~S_AXI_ARESETN),
     .en(en_1),
@@ -793,6 +793,7 @@ wire pos_clr_2;//位置置零信号
 wire [31:0] step_pos_2;//当前位置
 wire [31:0] step_speed_2;//当前速度
 reg [31:0] 	pul_value_2;//脉冲间隔数据
+assign addr_rst_2=pul_rst_2;
 
 //信号连接
 //reg6(ps->pl)
@@ -823,7 +824,7 @@ begin
 	if ( S_AXI_ARESETN == 1'b0 )
 	begin
 		pul_value_2 <= 0;
-	end if(!valid_2||ddr_data_2<2)
+	end if(!data_valid_2||ddr_data_2<2)
 	begin
 		pul_value_2 <= pul_value_2;
 	end
@@ -833,7 +834,7 @@ begin
 	end
 end
 
-DDR_motor_ctrl DDR_motor_ctrl_2 (
+ddr_motor_ctrl ddr_motor_ctrl_2 (
 	.clk(S_AXI_ACLK),
 	.rst(~S_AXI_ARESETN),
 	.en(en_2),

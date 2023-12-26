@@ -38,11 +38,11 @@ module pul_generate(
         else begin
             case(state)
                 START:begin
-                    if(!start || gap_value < 2) begin // 脉冲宽度小于2时，停止输出
-                        state <= START;
+                    if(start ) begin // 脉冲宽度小于2时，停止输出
+                        state <= RUN;
                     end
                     else begin
-                        state <= RUN;
+                        state <= START;
                     end
                 end
                 RUN:begin
