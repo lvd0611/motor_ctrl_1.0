@@ -24,7 +24,7 @@ module pul_generate(
         end
         else if(start)
             gap_value <= pul_data;
-        else
+        else 
             gap_value <= gap_value;
     end
     //Âö³åÊä³ö×´Ì¬»ú
@@ -38,11 +38,11 @@ module pul_generate(
         else begin
             case(state)
                 START:begin
-                    if(start)begin
-                        state <= RUN;
+                    if(!start || gap_value < 2) begin // Âö³å¿í¶ÈÐ¡ÓÚ2Ê±£¬Í£Ö¹Êä³ö
+                        state <= START;
                     end
                     else begin
-                        state <= START;
+                        state <= RUN;
                     end
                 end
                 RUN:begin
