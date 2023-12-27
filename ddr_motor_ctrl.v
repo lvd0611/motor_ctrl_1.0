@@ -1,7 +1,7 @@
 `timescale 1ns / 1ps
 
 
-module DDR_motor_ctrl(
+module ddr_motor_ctrl(
     input  clk,
     input  rst,
     input   en,//使能信号，为一时才开始读取数据
@@ -84,7 +84,7 @@ always@(posedge clk or negedge rst_n)begin
                 r_first <= 1'b0;
             end
             R_WAIT:begin
-                if(pul_stop)
+                if(pul_stop||pul_over)
                     r_state <= R_START;
                 else if(pul_cnt==decel_begin-1)
                     r_state <= R_FIFO;
