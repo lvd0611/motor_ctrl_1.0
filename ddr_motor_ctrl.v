@@ -25,7 +25,8 @@ module ddr_motor_ctrl(
     reg pul_en;
     wire rst_n;
     reg pul_over;
-
+    wire done;
+    
     assign step_speed = pul_value;
 
     //Âö³åÉú³ÉÄ£¿é
