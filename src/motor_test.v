@@ -1,0 +1,77 @@
+`timescale 1ns / 1ps
+
+module test_ddr_motor_ctrl;
+
+  // ?¡§??????
+  parameter CLK_PERIOD = 2; // ?¡À???????¡§?¡À????????
+
+  // ????
+  reg clk = 0;
+  reg rst = 1;
+  reg en = 0;
+  reg pul_rst = 0;
+  reg [1:0] pul_mode = 2'b00;
+  reg pul_stop = 0;
+  reg [31:0] step = 500;
+  reg [15:0] accel_end = 249;
+  reg [15:0] decel_begin = 250;
+  reg [31:0] pul_value = 100; // ?¨¨??????????100
+  reg pul_dir = 0;
+  reg pos_clr = 0;
+  reg [15:0] i;
+
+  // ????
+  wire pul_out;
+  wire read;
+  wire [31:0] step_pos;
+  wire [31:0] step_speed;
+
+  // ?????????¨¦
+  ddr_motor_ctrl dut (
+    .clk(clk),
+    .rst(rst),
+    .en(en),
+    .pul_rst(pul_rst),
+    .pul_mode(pul_mode),
+    .pul_stop(pul_stop),
+    .step(step),
+    .accel_end(accel_end),
+    .decel_begin(decel_begin),
+    .pul_value(pul_value),
+    .pul_dir(pul_dir),
+    .pos_clr(pos_clr),
+    .pul_out(pul_out),
+    .read(read),
+    .step_pos(step_pos),
+    .step_speed(step_speed)
+  );
+
+  // ?¨²???¡À??
+  always #((CLK_PERIOD / 2)) clk = ~clk;
+  
+  
+
+  // ???????¡è
+  initial begin
+    // ????
+    rst = 1;
+    #20;
+    rst=0;
+    // ?¨¨????????
+    en = 1; // ????????FIFO
+    pul_mode=2'b01;
+
+    // ????50?? read ???????????? 10 ?? pul_value
+    for (i = 0; i < 500; i = i + 1) begin
+      #100; // ?????????¡À??
+	wait (read == 1);
+      // ?????¨¬???? read ?????¨®???? 10 ?? pul_value
+      pul_value = pul_value + 10;
+
+    end
+
+    // ?¨¢??¡¤???
+#100000;
+  end
+
+endmodule

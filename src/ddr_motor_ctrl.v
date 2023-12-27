@@ -25,6 +25,7 @@ module ddr_motor_ctrl(
     reg pul_en;
     wire rst_n;
     reg pul_over;
+    wire done;
 
     assign step_speed = pul_value;
 
@@ -84,7 +85,7 @@ always@(posedge clk or negedge rst_n)begin
                 r_first <= 1'b0;
             end
             R_WAIT:begin
-                if(pul_stop)
+                if(pul_stop||pul_over)
                     r_state <= R_START;
                 else if(pul_cnt==decel_begin-1)
                     r_state <= R_FIFO;
